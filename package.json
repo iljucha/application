@@ -1,0 +1,27 @@
+{
+  "name": "@iljucha/application",
+  "version": "1.0.0",
+  "description": "Front End Application",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iljucha/application.git"
+  },
+  "keywords": [
+    "url",
+    "match"
+  ],
+  "dependencies": {
+    "@iljucha/assert": "1.0.0"
+  },
+  "author": "Ilja Bituzki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/iljucha/application/issues"
+  },
+  "homepage": "https://github.com/iljucha/application#readme"
+}
