@@ -23,7 +23,14 @@ export default class ExampleApplication extends Application {
         return this.select("p")
     }
     
-    favouriteAnimal = "Cat"
+    set favouriteAnimal(value) {
+        this._favouriteAnimal = value
+        this.render()
+    }
+    
+    get favouriteAnimal() {
+        return this._favouriteAnimal
+    }
     
     onConnect() {
         console.log("app-exampe spawned")
