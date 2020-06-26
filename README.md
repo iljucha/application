@@ -28,10 +28,11 @@ Application.import(ExampleApplication, ...) // In your main.js or so
 * get **template()** { *string* }
 * get **isOnScreen()** { *boolean* }
 * **render()** { *writes template to innerHTML* }
+* static **import(** *...ExtendedApplication* **)** { *imports, adds css to the header etc.* }
 
 ## Query Selector
 * **select(** *query* **)** { *Element* }
-* **selectAll(** *query* **)** { *NodeListOf<Element>* } 
+* **selectAll(** *query* **)** { *NodeListOf Element* } 
 
 ## Lifecycle methods
 * **onConnect()** { *Fires when the Application is first connected to the document's DOM.* }
@@ -70,6 +71,7 @@ Application.import(ExampleApplication, ...) // In your main.js or so
 * **onTouchEnd(** *event* **)** { *Fires when a finger is removed from a touch screen* }
 * **onTouchMove(** *event* **)** { *Fires when a finger is dragged across the screen* }
 * **onTouchStart(** *event* **)** { *Fires when a finger is placed on a touch screen* }
-* **onDrag(** *event* **)** { *Fires when the Application is dragged* }
-* **onDrag(** *event* **)** { *Fires when the Application is dragged* }
-* **onDrag(** *event* **)** { *Fires when the Application is dragged* }
+* **targetOn(** *Element|window*, *eventListener*, *eventHandler* **)** { *Adds an event listener to an Element* }
+* **targetOff(** *Element|window*, *eventListener*, *eventHandler* **)** { *Removes an event listener from an Element* }
+* **on(** *eventListener*, *eventHandler* **)** { *Adds an event listener* }
+* **off(** *eventListener*, *eventHandler* **)** { *Removes an event listener* }
