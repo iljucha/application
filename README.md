@@ -9,12 +9,44 @@ Front End Application
 ```javascript
 import Application from "../node_modules/@iljucha/application/index.js"
 
-export default class ExampleApplication extends Application { ... }
+export default class ExampleApplication extends Application {
+    get selector() { return "app-example" }
+    
+    get styles() {
+      return `
+        My favourite animal is ${this.favouriteAnimal}.
+        <p>The End</p>
+      `
+    }
+    
+    get paragraph() {
+        return this.select("p")
+    }
+    
+    favouriteAnimal = "Cat"
+    
+    onConnect() {
+        console.log("app-exampe spawned")
+    }
+    
+    onDisconnect() {
+        console.log("app-example removed from the DOM")
+    }
+    
+    // Example Event, there are many more predefined for usage like this
+    onClick(event) {
+        console.log("app-examle clicked", event)
+    }
+    
+    onMutation(mutationRecord) {
+        console.log(mutationRecord)
+    }
+}
 
 Application.import(ExampleApplication, ...) // In your main.js or so
 ```
 ## HTML
-Üut this anywhere in your html to use your Application
+Put this anywhere in your html to use your Application
 ```html
 <app-example></app-example>
 ```
