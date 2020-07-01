@@ -12,12 +12,9 @@
     "url": "git+https://github.com/iljucha/application.git"
   },
   "keywords": [
-    "url",
-    "match"
+    "html",
+    "app"
   ],
-  "dependencies": {
-    "@iljucha/assert": "1.0.0"
-  },
   "author": "Ilja Bituzki",
   "license": "ISC",
   "bugs": {

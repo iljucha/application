@@ -1,5 +1,43 @@
 // @ts-check
-import Assert from "../assert/index.js"
+
+/**
+ * @typedef {(event: Event) => void} DOMEvent
+ * @typedef {{
+ *      onClick?: DOMEvent
+ *      onMouseOver?: DOMEvent
+ *      onDoubleClick?: DOMEvent
+ *      onMouseDown?: DOMEvent
+ *      onMouseMove?: DOMEvent
+ *      onMouseOut?: DOMEvent
+ *      onMouseUp?: DOMEvent
+ *      onWheel?: DOMEvent
+ *      onContextMenu?: DOMEvent
+ *      onKeyDown?: DOMEvent
+ *      onKeyPress?: DOMEvent
+ *      onKeyUp?: DOMEvent
+ *      onDrag?: DOMEvent
+ *      onDragEnd?: DOMEvent
+ *      onDragEnter?: DOMEvent
+ *      onDragOver?: DOMEvent
+ *      onDragStart?: DOMEvent
+ *      onDrop?: DOMEvent
+ *      onScroll?: DOMEvent
+ *      onCopy?: DOMEvent
+ *      onCut?: DOMEvent
+ *      onPaste?: DOMEvent
+ *      onBlur?: DOMEvent
+ *      onFocus?: DOMEvent
+ *      onTouchCancel?: DOMEvent
+ *      onTouchEnd?: DOMEvent
+ *      onTouchMove?: DOMEvent
+ *      onTouchStart?: DOMEvent
+ *      onConnect?: () => void
+ *      onDisconnect?: () => void
+ *      onAdopt?: () => void
+ *      onMutation?: (mutationRecord: MutationRecord) => void
+ *      onFuck: () => void
+ * }} ApplicationEvents
+ */
 
 export default class Application extends HTMLElement {
     /**
@@ -13,12 +51,6 @@ export default class Application extends HTMLElement {
      * @type {string}
      */
     get selector() { return undefined }
-
-    /** 
-     * URIs with Stylesheets
-     * @type {string[]}
-     */
-    get styleUrls() { return undefined }
 
     /** 
      * Application Stylesheet
@@ -254,11 +286,15 @@ export default class Application extends HTMLElement {
         return rect.top < window.innerHeight && rect.bottom >= 0
     }
 
+    constructor() {
+        super()
+        this.render()
+    }
+
     /**
      * @type {() => void}
      */
     connectedCallback() {
-        this.render()
         this._setEvents()
         if (this.onMutation) {
             Application._observeMutations(this, this.onMutation)
@@ -319,8 +355,8 @@ export default class Application extends HTMLElement {
      * @param {() => void} eventHandler 
      */
     targetOn(targetElement, eventListener, eventHandler) {
-        Assert.type(eventListener, "eventListener", "string")
-        Assert.type(eventHandler, "eventHandler", "function")
+        assert(typeof eventListener === "string", "eventListener must be string")
+        assert(typeof eventHandler === "function", "eventHandler must be function")
         targetElement.addEventListener(eventListener, eventHandler, true)
     }
 
@@ -331,8 +367,8 @@ export default class Application extends HTMLElement {
      * @param {() => void} eventHandler 
      */
     targetOff(targetElement, eventListener, eventHandler) {
-        Assert.type(eventListener, "eventListener", "string")
-        Assert.type(eventHandler, "eventHandler", "function")
+        assert(typeof eventListener === "string", "eventListener must be string")
+        assert(typeof eventHandler === "function", "eventHandler must be function")
         targetElement.removeEventListener(eventListener, eventHandler, true)
     }
 
@@ -342,8 +378,8 @@ export default class Application extends HTMLElement {
      * @param {() => void} eventHandler 
      */
     on(eventListener, eventHandler) {
-        Assert.type(eventListener, "eventListener", "string")
-        Assert.type(eventHandler, "eventHandler", "function")
+        assert(typeof eventListener === "string", "eventListener must be string")
+        assert(typeof eventHandler === "function", "eventHandler must be function")
         this.addEventListener(eventListener, eventHandler, true)
     }
 
@@ -353,8 +389,8 @@ export default class Application extends HTMLElement {
      * @param {(event: Event) => void} eventHandler 
      */
     off(eventListener, eventHandler) {
-        Assert.type(eventListener, "eventListener", "string")
-        Assert.type(eventHandler, "eventHandler", "function")
+        assert(typeof eventListener === "string", "eventListener must be string")
+        assert(typeof eventHandler === "function", "eventHandler must be function")
         this.removeEventListener(eventListener, eventHandler, true)
     }
 
@@ -383,12 +419,8 @@ export default class Application extends HTMLElement {
      * @param {string} object.name
      */
     static _name(object) {
-        if (!object.name) {
-            throw Error("Class must have a name")
-        }
-        if (!/^[(a-zA-Z)]+Application$/g.test(object.name)) {
-            throw Error("Class name must include the word 'Application' at the end")
-        }
+        assert(object.name, "Class must have a name")
+        assert(/^[(a-zA-Z)]+Application$/g.test(object.name), "Class name must include the word 'Application' at the end")
         return "app-" + object.name.replace("Application", "").toLowerCase()
     }
 
@@ -476,8 +508,8 @@ export default class Application extends HTMLElement {
      * @param {string} styleText - CSS String with rules
      */
     static _getStyles(prefix, styleText) {
-        Assert.type(prefix, "styles", "string")
-        Assert.type(styleText, "styles", "string")
+        assert(typeof prefix === "string", "prefix must be string")
+        assert(typeof styleText === "string", "styleText must be string")
         const unnecessary = /\s+((["\']).*?(?=\2)\2)|\s\s+/gm
         const replaceApplication = /:app/g
         return styleText
@@ -487,21 +519,9 @@ export default class Application extends HTMLElement {
     }
 
     static _setStyles(app, appSelector) {
-        Assert.type(appSelector, "appSelector", "string")
-        if (app.prototype.styleUrls) {
-            Assert.type(app.prototype.styleUrls, "styleUrls", "Array<string>")
-            if (!document.querySelector(`head link[application="${appSelector}"]`)) {
-                app.prototype.styleUrls.map(styleUrl => {
-                    let stylesEl = document.createElement("link")
-                    stylesEl.setAttribute("application", appSelector)
-                    stylesEl.rel = "stylesheet"
-                    stylesEl.href = styleUrl
-                    document.querySelector("head").append(stylesEl)
-                })
-            }
-        }
+        assert(typeof appSelector === "string", "appSelector must be string")
         if (app.prototype.styles) {
-            Assert.type(app.prototype.styles, "styles", "string")
+            assert(typeof app.prototype.styles == "string", "styles must be string")
             if (!document.querySelector(`head style[application="${appSelector}"]`)) {
                 let stylesEl = document.createElement("style")
                 stylesEl.setAttribute("application", appSelector)
@@ -517,6 +537,7 @@ export default class Application extends HTMLElement {
      * @param {(mutations: MutationRecord) => void} callback
      */
     static _observeMutations(element, callback) {
+        assert(typeof callback === "function", "callback must be a function")
         let observer = new MutationObserver(mutationRecord => {
             mutationRecord.forEach(mutation => callback(mutation))
         })
@@ -534,13 +555,20 @@ export default class Application extends HTMLElement {
      * Takes Application extended classes as argument and defines them
      */
     static import() {
-        let i = 0, appSelector
-        const apps = arguments
-        const appsLength = apps.length
-        for (i; i < appsLength; i++) {
-            appSelector = Application._selector(apps[i])
-            Application._setStyles(apps[i], appSelector)
-            Application._define(appSelector, apps[i])
-        }
+        [ ...arguments ].forEach(app => {
+            const appSelector = Application._selector(app)
+            Application._setStyles(app, appSelector)
+            Application._define(appSelector, app)
+        })
+    }
+}
+
+/**
+ * @param {any} condition 
+ * @param {string} message 
+ */
+export function assert(condition, message) {
+    if (!condition) {
+        throw Error(message)
     }
 }
