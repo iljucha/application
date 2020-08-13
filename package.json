@@ -1,24 +1,30 @@
 {
-  "name": "@iljucha/application",
-  "version": "1.0.0",
-  "description": "Front End Application",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "author": {
+    "name": "Ilja Bituzki"
   },
+  "bugs": {
+    "url": "https://github.com/iljucha/application/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Front End Application",
+  "homepage": "https://github.com/iljucha/application#readme",
+  "keywords": [
+    "html",
+    "app",
+    "front-end",
+    "custom-element"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "@iljucha/application",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iljucha/application.git"
   },
-  "keywords": [
-    "html",
-    "app"
-  ],
-  "author": "Ilja Bituzki",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/iljucha/application/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/iljucha/application#readme"
+  "type": "module",
+  "version": "1.0.8"
 }
